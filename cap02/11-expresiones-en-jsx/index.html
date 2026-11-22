@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Heladería</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@babel/standalone@8.0.4/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@19.2.0?dev";
+      import { createRoot } from "https://esm.sh/react-dom@19.2.0/client?dev";
+
+      //Función para formatear el precio
+      const formatPrice = (price) =>
+        new Intl.NumberFormat("es-EC", {
+          style: "currency",
+          currency: "USD",
+        }).format(price);
+
+      const menuItem = {
+        id: 1,
+        iceCream: {
+          id: 3,
+          name: "Guayaba",
+          imagePath: "imagenes/mora.svg",
+        },
+
+        precio: 1.5,
+        description: "Mora de Ambato con un toque de limón.",
+        inStock: false,
+      };
+
+      const menu = (
+        <>
+          <main>
+            <h1>La Heladeria</h1>
+
+            <article className="menu-item" aria-labelledby={`menu-item-${menuItem.id}-name`}>
+              <img src={menuItem.iceCream.imagePath} alt="" />
+              <h2 id={`menu-item-${menuItem.id}-name`}>{menuItem.iceCream.name}</h2>
+              <p className="menu-item-description">{menuItem.description}</p>
+              <p className="menu-item-precio">{formatPrice(menuItem.precio)}</p>
+              <p className="menu-item-stock">{menuItem.inStock ? "Disponile hoy" : "Agotado"}</p>
+            </article>
+          </main>
+
+          <footer>
+            <p>Heladeria--Ambato</p>
+          </footer>
+        </>
+      );
+
+      const container = document.getElementById("root");
+      createRoot(container).render(menu);
+    </script>
+  </body>
+</html>
