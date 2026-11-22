@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial
+→ scale=1"
+    />
+    <title>La Heladería</title>
+    <script type="module">
+      import React from "https://esm.sh/react@19.2.0?dev";
+      import { createRoot } from "https://esm.sh/react-dom@19.2.0/client?dev";
+      console.log("React", React.version);
+      console.log("createRoot es una", typeof createRoot);
+
+      //Creación del elemento
+      const title = React.createElement("h1",null,"La Heladeria"); 
+
+      // type, props y children
+      // tipo de elemento, atributos, contenido
+
+      console.log(title);
+
+      //Asignación del contenedor (Dentro de HTML) para los nodos que creará React.
+      const container = document.getElementById("root"); 
+
+      //Renderización de los objetos en el contenedor asociado. Aparicion de los objetos en el DOM.
+      createRoot(container).render(title);
+
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
