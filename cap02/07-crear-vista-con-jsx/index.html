@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Heladería</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@babel/standalone@8.0.4/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@19.2.0?dev";
+      import { createRoot } from "https://esm.sh/react-dom@19.2.0/client?dev";
+
+      const menu = (
+        <>
+        <main>
+          <h1>La Heladeria</h1>
+
+          {/* Primera Sección */}
+
+          <article className="menu-item">
+            <h2>Mora Silvestre</h2>
+            <p className="menu-item-description">
+              Mora de Ambato con toque de limón.
+              </p>
+              </article>
+
+        
+            <article className="menu-item">
+            <h2>Guayaba</h2>
+            <p className="menu-item-description">
+              Guayaba de la costa Ecuatoriana.
+            </p>
+          </article>
+
+        </main>
+
+        <footer>
+         <p>La heladeria de Ambato.</p>
+        </footer>
+        </>
+      );
+
+      const container = document.getElementById("root");
+      createRoot(container).render(menu);
+    </script>
+  </body>
+</html>
