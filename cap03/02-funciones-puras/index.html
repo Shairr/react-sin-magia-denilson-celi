@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Heladería</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/@babel/standalone@8.0.4/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+      import React from "https://esm.sh/react@19.2.0?dev";
+      import { createRoot } from "https://esm.sh/react-dom@19.2.0/client?dev";
+
+      //Práctica de funciones puras
+
+      let texRate = 0.12;
+
+      const priceWithTax = (price) => {
+        return price * (1 + texRate);
+      };
+
+      //Función para formatear el precio
+      const formatPrice = (price) =>
+        new Intl.NumberFormat("es-EC", {
+          style: "currency",
+          currency: "USD",
+        }).format(price);
+
+      // console.log(formatPrice(priceWithTax(1.5)));
+
+      // texRate = 0.15;
+
+      // console.log(formatPrice(priceWithTax(1.5)));
+
+      const menuItem = {
+        id: 1,
+        iceCream: {
+          id: 3,
+          name: "Guayaba",
+          imagePath: "../../cap02/11-expresiones-en-jsx/imagenes/mora.svg",
+        },
+
+        precio: 1.5,
+        description: "Mora de Ambato con un toque de limón.",
+        inStock: false,
+      };
+
+      //Función Impura
+
+      const applyDiscount = (item, percent) => {
+        //Modifica el valor interno del objeto menuItem.
+        item.precio = item.precio * (1 - percent);
+        return item;
+      };
+
+      console.log("Precio sin modificar");
+      console.log(formatPrice(menuItem.precio));
+
+      const enOferta = applyDiscount(menuItem, 0.2);
+
+      console.log("Precio con decuento del 0.2 del nuevo objeto y no del objeto original 'menuItem'");
+      console.log(formatPrice(enOferta.precio));
+
+      console.log("Precio despues del descuento del objeto original");
+      console.log(formatPrice(menuItem.precio));
+
+      //Función pura
+
+      const withDiscount = (item, percent) => ({
+        ...item,
+        precio: item.precio * (1 - percent),
+      });
+
+      const rebajado = withDiscount(menuItem, 0.2);
+
+      console.log("Resultados de una función pura");
+      console.log(formatPrice(rebajado.precio));
+      console.log(formatPrice(menuItem.precio));
+
+      console.log(rebajado === menuItem);
+      console.log(rebajado.iceCream === menuItem.iceCream);
+      console.log(rebajado);
+      console.log(menuItem);
+
+      //Prácitica de la sección 
+
+      //Función pura
+      const menuArray = [menuItem]; 
+
+      const addItemPuro = (lista, item) => [...lista, item];
+
+      const nuevoMenu = addItemPuro(menuArray, rebajado); 
+
+      console.log("Tamaño del array nuevo: ", nuevoMenu.length)
+      console.log("Tamaño del array original: ", menuArray.length); 
+
+      console.log(nuevoMenu);
+      console.log(menuArray);
+
+      //Función impura
+
+      const addItemPuroo = (lista, item) => {
+
+        lista.push(item);
+        return lista; 
+
+      };
+
+      const mutacion = addItemPuroo(menuArray, rebajado); 
+
+      console.log("Tamaño del array original después del push:", menuArray.length);
+
+
+      const menu = (
+        <>
+          <main>
+            <h1>La Heladeria</h1>
+
+            <article
+              className="menu-item"
+              aria-labelledby={`menu-item-${menuItem.id}-name`}
+            >
+              <img src={menuItem.iceCream.imagePath} alt="" />
+              <h2 id={`menu-item-${menuItem.id}-name`}>
+                {menuItem.iceCream.name}
+              </h2>
+              <p className="menu-item-description">{menuItem.description}</p>
+              <p className="menu-item-precio">{formatPrice(menuItem.precio)}</p>
+              <p className="menu-item-stock">
+                {menuItem.inStock ? "Disponile hoy" : "Agotado"}
+              </p>
+            </article>
+          </main>
+
+          <footer>
+            <p>Heladeria--Ambato</p>
+          </footer>
+        </>
+      );
+
+      const container = document.getElementById("root");
+      createRoot(container).render(menu);
+    </script>
+  </body>
+</html>
